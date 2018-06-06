@@ -1,13 +1,20 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
+const app = require("express")()
+const cors = require("cors")
+const bodyParser = require("body-parser")
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+const usersRoutes = require("./routes/users")
+const eventsRoutes = require("./routes/events")
+
+const PORT = 8080
 
 app.use(cors())
 
-app.get('/products/:id', function (req, res, next) {
-    res.json({msg: 'This is CORS-enabled for all origins!'})
-})
+app.use("/api/users", usersRoutes)
+app.use("/api/events", eventsRoutes)
 
-app.listen(80, function () {
-    console.log('CORS-enabled web server listening on port 80')
-})
+app.listen(PORT, () => console.log(`Go to http://localhost:${PORT}/`))
