@@ -25,14 +25,24 @@ router.post("/", async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
+  const { offset = 0, count = 5 } = req.query
+
   const response = await db
     .get()
     .collection(COLLECTION_NAME)
     .find()
 
-  const data = await response.toArray()
+  const data = await response
+    .skip(Number(offset))
+    .limit(Number(count))
+    .toArray()
 
-  res.send(data.map(printUser))
+  res.send({
+    meta: {
+      total: await response.count()
+    },
+    result: data.map(printUser)
+  })
 })
 
 router.get("/:id", async (req, res) => {
