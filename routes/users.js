@@ -1,24 +1,49 @@
 const router = require("express").Router()
-const bd = require("../data")
+const { ObjectID } = require("mongodb")
+const db = require("../data/db")
+const { assoc, omit, compose } = require("ramda")
 
-// define the home page route
-router.get("/", (req, res) => {
-  return res.json(bd.users.findAll(req.query))
+const COLLECTION_NAME = "user"
+
+//prettier-ignore
+const printUser = (data) => compose(
+  omit(["_id"]),
+  assoc("id", data._id),
+)(data)
+
+router.post("/", async (req, res) => {
+  let data = req.body
+
+  const responce = await db
+    .get()
+    .collection(COLLECTION_NAME)
+    .insert(data)
+
+  data = printUser(data)
+
+  res.send(data)
 })
 
-router.post("/", (req, res) => {
-  return res.json({
-    meta: {},
-    result: bd.users.insert(req.body)
-  })
+router.get("/", async (req, res) => {
+  const response = await db
+    .get()
+    .collection(COLLECTION_NAME)
+    .find()
+
+  const data = await response.toArray()
+
+  res.send(data.map(printUser))
 })
 
-// define the about route
-router.get("/:id", (req, res) => {
-  return res.json({
-    meta: "Ua ha ha",
-    result: bd.users.findById(req.params.id)
-  })
+router.get("/:id", async (req, res) => {
+  const id = req.params.id
+
+  const response = await db
+    .get()
+    .collection(COLLECTION_NAME)
+    .findOne({ _id: ObjectID(id) })
+
+  res.send(printUser(response))
 })
 
 module.exports = router

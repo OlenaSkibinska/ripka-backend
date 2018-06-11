@@ -20,31 +20,3 @@ GET http://localhost:8080/api/events?offset=2&count=4
 GET http://localhost:8080/api/events
 
 ###
-
-GET http://localhost:8080/api/users
-
-###
-
-GET http://localhost:8080/api/users?offset=2&count=4
-
-###
-
-GET http://localhost:8080/api/users/2
-
-###
-
-POST http://localhost:8080/api/users
-Content-Type: application/json
-
-{
-    "name": "Victor Frankl 1",
-    "description": "He works in Non profit organizaion LEF full time, which spread eco-initiatives. Robert believes that by using conservation as a tool will not only protect our remarkable natural world, but also will protect and improve human lives. He wants to attract more people to their initiative.",
-    "contacts": "+38098678594",
-    "location": "Odesa, Ukraine",
-    "photo": "njhniezzny9ja9xmlfun",
-    "interests": "Murders",
-    "id": 2
-}
-
-###
-
