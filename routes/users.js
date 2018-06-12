@@ -57,7 +57,7 @@ router.get("/:id", async (req, res) => {
   res.send(printUser(response))
 })
 
-router.patch("/:id", async (req, res) => {
+router.patch("/edit/:id", async (req, res) => {
   const id = req.params.id
   const data = req.body
 
