@@ -7,6 +7,7 @@ const COLLECTION_NAME = "user"
 
 //prettier-ignore
 const printUser = (data) => compose(
+  // console.log(data._id),
   omit(["_id"]),
   assoc("id", data._id),
 )(data)
@@ -14,7 +15,7 @@ const printUser = (data) => compose(
 router.post("/", async (req, res) => {
   let data = req.body
 
-  const responce = await db
+  const response = await db
     .get()
     .collection(COLLECTION_NAME)
     .insert(data)
@@ -55,5 +56,42 @@ router.get("/:id", async (req, res) => {
 
   res.send(printUser(response))
 })
+
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id
+  const data = req.body
+
+  const response = await db
+    .get()
+    .collection(COLLECTION_NAME)
+    .findOneAndUpdate(
+      { _id: ObjectID(id) },
+      { $set: data},
+      { returnOriginal: false }
+    )
+  res.send(printUser(response))
+})
+
+router.delete("/:id", async (req, res) => {
+  let data = req.body;
+
+  const response = await db
+    .get()
+    .collection(COLLECTION_NAME)
+    .findOneAndDelete({_id: ObjectID(data._id)}
+    );
+  res.send(printUser(response));
+});
+
+router.get('/name_like=:name', async (req, res) => {
+  let name = req.params.name;
+  console.log(req.params.name)
+  const response = await db
+    .get()
+    .collection(COLLECTION_NAME)
+    .findOne({"name": name});
+
+  res.send(response);
+});
 
 module.exports = router

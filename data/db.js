@@ -1,5 +1,5 @@
 const MongoClient = require("mongodb").MongoClient
-const DB_NAME = "ripka" //TODO: fix this shit
+const DB_NAME = "ripka"
 
 let db = null
 

@@ -7,8 +7,7 @@ GET http://localhost:8080/api/users?offset=2
 
 ###
 
-#﻿5b1ecb457714025cba6b162a
-GET http://localhost:8080/api/users/5b1ecb457714025cba6b162a
+GET http://localhost:8080/api/users/5b1fd178de2774088cfed5c7
 
 ###
 
@@ -25,4 +24,24 @@ Content-Type: application/json
 }
 
 ###
+
+DELETE http://localhost:8080/api/users/5b1fda3c1e7a02365a555224
+
+###
+
+
+###
+
+PATCH http://localhost:8080/api/users/5b1fd33bde2774088cfed6ab
+Content-Type: application/json
+
+{
+    "name": "Olgaa"
+}
+
+###
+
+
+
+
 

@@ -1,3 +1,17 @@
+
+GET http://localhost:8080/api/events
+
+###
+
+GET http://localhost:8080/api/events?offset=2&count=4
+
+###
+
+GET http://localhost:8080/api/events/5b1fd490de2774088cfed79c
+
+###
+
+
 POST http://localhost:8080/api/events
 Content-Type: application/json
 
@@ -13,10 +27,22 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/events?offset=2&count=4
+DELETE http://localhost:8080/api/events/5b1fd4b3de2774088cfed7bb
 
 ###
 
-GET http://localhost:8080/api/events
+PATCH http://localhost:8080/api/events/5b1fd4a4de2774088cfed7b0
+Content-Type: application/json
+
+{
+    "name": "Find job"
+}
 
 ###
+
+
+
+
+
+
+
