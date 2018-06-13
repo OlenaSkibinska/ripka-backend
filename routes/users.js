@@ -72,7 +72,11 @@ router.patch("/:id", async (req, res) => {
   const response = await db
     .get()
     .collection(COLLECTION_NAME)
-    .findOneAndUpdate({ _id: ObjectID(id) }, { $set: data }, { returnOriginal: false })
+    .findOneAndUpdate(
+      { _id: ObjectID(id) },
+      { $set: data },
+      { returnOriginal: false }
+      )
 
   res.send(printUser(response.value))
 })

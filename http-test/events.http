@@ -31,7 +31,7 @@ DELETE http://localhost:8080/api/events/5b1fd4b3de2774088cfed7bb
 
 ###
 
-PATCH http://localhost:8080/api/events/edit/5b1fd4a4de2774088cfed7b0
+PATCH http://localhost:8080/api/events/5b1fd4a4de2774088cfed7b0
 Content-Type: application/json
 
 {
