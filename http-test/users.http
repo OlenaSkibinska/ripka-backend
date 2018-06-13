@@ -3,6 +3,10 @@ GET http://localhost:8080/api/users
 
 ###
 
+GET http://localhost:8080/api/users?q=User
+
+###
+
 GET http://localhost:8080/api/users?offset=2
 
 ###
@@ -25,16 +29,14 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8080/api/users/5b1fda3c1e7a02365a555224
+DELETE http://localhost:8080/api/users/5b20475d6276ee1435671fa9
 
 ###
-
-
-PATCH http://localhost:8080/api/users/edit/5b1fd33bde2774088cfed6ab
+PATCH http://localhost:8080/api/users/5b204995c6925a144f92411e
 Content-Type: application/json
 
 {
-    "name": "Olgam"
+    "name": "Olgam 4"
 }
 
 ###

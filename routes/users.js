@@ -26,12 +26,20 @@ router.post("/", async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
-  const { offset = 0, count = 5 } = req.query
+  const { offset = 0, count = 5, q } = req.query
+
+  let search = {}
+
+  if (q) {
+    search = {
+      $or: [{ name: { $regex: q } }, { contacts: { $regex: q } }]
+    }
+  }
 
   const response = await db
     .get()
     .collection(COLLECTION_NAME)
-    .find()
+    .find(search)
 
   const data = await response
     .skip(Number(offset))
@@ -57,41 +65,27 @@ router.get("/:id", async (req, res) => {
   res.send(printUser(response))
 })
 
-router.patch("/edit/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   const id = req.params.id
   const data = req.body
 
   const response = await db
     .get()
     .collection(COLLECTION_NAME)
-    .findOneAndUpdate(
-      { _id: ObjectID(id) },
-      { $set: data},
-      { returnOriginal: false }
-    )
-  res.send(printUser(response))
+    .findOneAndUpdate({ _id: ObjectID(id) }, { $set: data }, { returnOriginal: false })
+
+  res.send(printUser(response.value))
 })
 
 router.delete("/:id", async (req, res) => {
-  let data = req.body;
+  const id = req.params.id
 
-  const response = await db
+  await db
     .get()
     .collection(COLLECTION_NAME)
-    .findOneAndDelete({_id: ObjectID(data._id)}
-    );
-  res.send(printUser(response));
-});
+    .findOneAndDelete({ _id: ObjectID(id) })
 
-router.get('/name_like=:name', async (req, res) => {
-  let name = req.params.name;
-  console.log(req.params.name)
-  const response = await db
-    .get()
-    .collection(COLLECTION_NAME)
-    .findOne({"name": name});
-
-  res.send(response);
-});
+  res.send({ ok: true })
+})
 
 module.exports = router
